@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050            #port that is accessed by other pods to communicate with multi client pod
+      targetPort: 3000      #port of target object(pod) 
+      nodePort: 31515       #port that I need to test in browser,port exposed in the outside world ( minikube ip : 31515 ) 
+  selector:
+    component: web
+    
+# we have a service type NodePort which is used to expose a container port to the outside world 
+# it is used in develpoment
+# kube-proxy is the single window to the outside world 
+# kube-proxy directs the browser's request to the coresponding service
+# service is linked to the pod using selector 
